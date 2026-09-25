@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的媒体中心</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 30px 20px;
+            color: #333;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4a90d9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .page-title small {
+            font-size: 16px;
+            font-weight: 400;
+            color: #888;
+            margin-left: 10px;
+        }
+        .collection {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px 25px 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.2s ease;
+        }
+        .collection:hover { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10); }
+        .collection-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            border-bottom: 2px solid #e8ecf1;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .collection-header h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .collection-header .badge {
+            font-size: 13px;
+            color: #888;
+            background: #f0f2f5;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .collection-desc {
+            color: #777;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 18px;
+            padding-left: 2px;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .media-item {
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 16px 16px 18px;
+            border: 1px solid #eef0f3;
+            transition: border-color 0.2s, background 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .media-item:hover {
+            border-color: #c0c8d4;
+            background: #ffffff;
+        }
+        .media-item h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #1e293b;
+        }
+        .media-item h4 .artist-tag {
+            font-weight: 400;
+            color: #6b7a8f;
+            font-size: 14px;
+        }
+        .media-item video,
+        .media-item audio {
+            width: 100%;
+            border-radius: 6px;
+            background: #000;
+            display: block;
+            outline: none;
+        }
+        .media-item video {
+            aspect-ratio: 16 / 9;
+            background: #1a1a1a;
+        }
+        .media-item audio { height: 48px; }
+        .media-actions {
+            margin-top: 14px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-top: 1px solid #eef0f3;
+            padding-top: 14px;
+        }
+        .btn-open {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            background: #4a90d9;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.1s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-open:hover {
+            background: #357abd;
+            text-decoration: none;
+            color: #fff;
+        }
+        .btn-open:active { transform: scale(0.96); }
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px dashed #d0d7de;
+        }
+        .empty-state a { color: #4a90d9; text-decoration: none; }
+        .global-empty {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .global-empty h2 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .global-empty p { color: #999; }
+        .global-empty a { color: #4a90d9; text-decoration: none; }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 13px;
+            color: #aaa;
+            border-top: 1px solid #e8ecf1;
+            padding-top: 20px;
+        }
+        @media (max-width: 640px) {
+            body { padding: 16px 12px; }
+            .collection { padding: 18px 16px; }
+            .media-grid { grid-template-columns: 1fr; }
+            .page-title { font-size: 22px; flex-wrap: wrap; }
+            .collection-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="page-title">
+        📂 我的媒体合集
+        <small>— 按合集分组管理</small>
+    </div>
+
+    {% for collection in collections %}
+    <div class="collection">
+        <div class="collection-header">
+            <h2>{{ collection.name }}</h2>
+            <span class="badge">
+                🎬 {{ collection.videos.count }} 个视频 &nbsp;·&nbsp; 🎵 {{ collection.audios.count }} 个音频
+            </span>
+        </div>
+        {% if collection.description %}
+        <div class="collection-desc">{{ collection.description }}</div>
+        {% endif %}
+
+        <div class="media-grid">
+            {% for video in collection.videos.all %}
+            <div class="media-item">
+                <h4>🎬 {{ video.title }}</h4>
+                <video controls preload="metadata">
+                    <source src="{{ video.file.url }}" type="video/mp4">
+                    您的浏览器不支持 HTML5 视频播放。
+                </video>
+                <div class="media-actions">
+                    <a href="{{ video.file.url }}" target="_blank" class="btn-open">🔗 在新窗口打开</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% for audio in collection.audios.all %}
+            <div class="media-item">
+                <h4>
+                    🎵 {{ audio.title }}
+                    {% if audio.artist %}
+                    <span class="artist-tag">— {{ audio.artist }}</span>
+                    {% endif %}
+                </h4>
+                <audio controls preload="metadata">
+                    <source src="{{ audio.file.url }}" type="audio/mpeg">
+                    您的浏览器不支持 HTML5 音频播放。
+                </audio>
+                <div class="media-actions">
+                    <a href="{{ audio.file.url }}" target="_blank" class="btn-open">🔗 在新窗口打开</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not collection.videos.all and not collection.audios.all %}
+            <div class="empty-state">
+                📭 该合集下暂无媒体文件，请前往 <a href="/admin" target="_blank">后台管理</a> 添加。
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="global-empty">
+        <h2>📁 还没有创建合集</h2>
+        <p>请先登录 <a href="/admin" target="_blank">后台管理</a>，创建合集并添加媒体文件。</p>
+    </div>
+    {% endfor %}
+
+    <div class="footer">
+        Django 本地影音工具 &bull; 点击「在新窗口打开」可在独立页面播放并拖动进度条
+    </div>
+</div>
+
+</body>
+</html>
