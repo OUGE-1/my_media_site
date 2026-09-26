@@ -11,8 +11,6 @@
             background: #f0f2f5;
             color: #333;
         }
-
-        /* ===== 侧边栏 ===== */
         .sidebar {
             position: fixed; left: 0; top: 0; bottom: 0;
             width: 260px; background: #1e1e1e;
@@ -51,10 +49,9 @@
         }
         .sidebar-footer { padding: 8px; border-top: 1px solid #2a2a2a; }
 
-        /* ===== 主内容 ===== */
         .main-content {
             margin-left: 260px;
-            padding: 36px 32px 120px;
+            padding: 36px 32px 200px;
             min-height: 100vh;
         }
         .content-inner { max-width: 900px; margin: 0 auto; }
@@ -65,18 +62,11 @@
             display: flex; align-items: center; gap: 10px;
         }
 
-        /* 搜索框 */
-        .search-bar {
-            display: flex; gap: 10px;
-            margin-bottom: 16px;
-        }
+        .search-bar { display: flex; gap: 10px; margin-bottom: 16px; }
         .search-bar input[type="text"] {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid #dde3ea;
-            border-radius: 10px;
-            font-size: 15px;
-            outline: none;
+            flex: 1; padding: 12px 18px;
+            border: 1px solid #dde3ea; border-radius: 10px;
+            font-size: 15px; outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
             background: #fff;
         }
@@ -86,63 +76,43 @@
         }
         .search-bar button {
             padding: 0 28px;
-            background: #4a90d9;
-            color: #fff; border: none;
-            border-radius: 10px;
+            background: #4a90d9; color: #fff;
+            border: none; border-radius: 10px;
             font-size: 15px; font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
+            cursor: pointer; transition: background 0.2s;
         }
         .search-bar button:hover { background: #357abd; }
 
-        /* 源切换 / 播放方式切换 */
         .source-bar {
             display: flex; align-items: center; gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 14px;
+            flex-wrap: wrap; margin-bottom: 14px;
             font-size: 13px; color: #7a8699;
         }
         .source-bar:last-of-type { margin-bottom: 26px; }
         .source-label { margin-right: 4px; }
         .source-chip {
-            padding: 5px 14px;
-            border-radius: 20px;
-            border: 1px solid #dde3ea;
-            background: #fff;
-            color: #4a5568;
-            font-size: 13px;
-            cursor: pointer;
-            text-decoration: none;
+            padding: 5px 14px; border-radius: 20px;
+            border: 1px solid #dde3ea; background: #fff;
+            color: #4a5568; font-size: 13px;
+            cursor: pointer; text-decoration: none;
             transition: all 0.15s;
         }
         .source-chip:hover { border-color: #4a90d9; color: #4a90d9; }
         .source-chip.active {
-            background: #4a90d9;
-            border-color: #4a90d9;
-            color: #fff;
+            background: #4a90d9; border-color: #4a90d9; color: #fff;
         }
         .source-chip.enhanced.active {
-            background: #d9538c;
-            border-color: #d9538c;
+            background: #d9538c; border-color: #d9538c;
         }
         .source-chip.mode-chip.active {
-            background: #4a9d7a;
-            border-color: #4a9d7a;
+            background: #4a9d7a; border-color: #4a9d7a;
         }
-        .source-chip .tag {
-            font-size: 11px; opacity: 0.75;
-            margin-left: 4px;
-        }
+        .source-chip .tag { font-size: 11px; opacity: 0.75; margin-left: 4px; }
 
-        /* 结果列表 */
-        .result-list {
-            display: flex; flex-direction: column; gap: 8px;
-        }
+        .result-list { display: flex; flex-direction: column; gap: 8px; }
         .song-item {
-            background: #fff;
-            border: 1px solid #eef0f3;
-            border-radius: 10px;
-            padding: 12px 16px;
+            background: #fff; border: 1px solid #eef0f3;
+            border-radius: 10px; padding: 12px 16px;
             display: flex; align-items: center; gap: 14px;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
@@ -151,11 +121,8 @@
             box-shadow: 0 4px 14px rgba(0,0,0,0.06);
         }
         .song-cover {
-            width: 48px; height: 48px;
-            border-radius: 8px;
-            background: #f0f2f5;
-            flex-shrink: 0;
-            object-fit: cover;
+            width: 48px; height: 48px; border-radius: 8px;
+            background: #f0f2f5; flex-shrink: 0; object-fit: cover;
         }
         .song-info { flex: 1; min-width: 0; }
         .song-name {
@@ -167,77 +134,110 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .song-meta .sep { margin: 0 6px; color: #cbd5e0; }
-        .song-duration {
-            font-size: 13px; color: #98a6b8;
-            flex-shrink: 0; padding: 0 6px;
-        }
+        .song-duration { font-size: 13px; color: #98a6b8; flex-shrink: 0; padding: 0 6px; }
         .btn-play {
             display: inline-flex; align-items: center; gap: 5px;
-            padding: 7px 16px;
-            background: #d9538c; color: #fff;
+            padding: 7px 16px; background: #d9538c; color: #fff;
             font-size: 13px; font-weight: 500;
-            text-decoration: none;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
+            text-decoration: none; border: none;
+            border-radius: 8px; cursor: pointer;
             transition: background 0.2s, transform 0.1s;
-            flex-shrink: 0;
-            font-family: inherit;
+            flex-shrink: 0; font-family: inherit;
         }
         .btn-play:hover { background: #c0437a; }
         .btn-play:active { transform: scale(0.96); }
 
-        /* 状态提示 */
         .hint {
-            text-align: center;
-            padding: 50px 20px;
-            color: #9aa6b8;
-            font-size: 14px;
+            text-align: center; padding: 50px 20px;
+            color: #9aa6b8; font-size: 14px;
         }
         .hint.error { color: #d9534f; }
         .hint .big { font-size: 42px; margin-bottom: 12px; display: block; }
 
-        /* ===== 底部播放条 ===== */
         .player-bar {
-            position: fixed;
-            left: 260px;
-            right: 0;
-            bottom: 0;
-            background: #fff;
-            border-top: 1px solid #e0e6ed;
+            position: fixed; left: 260px; right: 0; bottom: 0;
+            background: #fff; border-top: 1px solid #e0e6ed;
             box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
             transform: translateY(100%);
             transition: transform 0.25s ease;
             z-index: 150;
+            display: flex; flex-direction: column;
+            max-height: 70vh;
         }
         .player-bar.show { transform: translateY(0); }
 
-        .player-info {
-            display: flex; align-items: center; gap: 12px;
-            flex: 1; min-width: 0;
+        .player-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 20px; border-bottom: 1px solid #f0f2f5;
         }
         .player-title {
             font-size: 14px; font-weight: 500; color: #1e293b;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            flex: 1;
         }
         .player-close {
             background: transparent; border: none;
             color: #98a6b8; font-size: 16px;
             cursor: pointer; padding: 4px 8px;
             border-radius: 6px; flex-shrink: 0;
+            margin-left: 10px;
         }
         .player-close:hover { background: #f0f2f5; color: #4a5568; }
-        .player-frame iframe { display: block; border-radius: 6px; }
 
-        /* 响应式 */
+        .player-body {
+            display: flex; gap: 16px;
+            padding: 12px 20px 16px;
+            align-items: flex-start;
+        }
+
+        .audio-wrap {
+            flex: 0 0 320px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .audio-wrap audio { width: 100%; }
+        .audio-cover {
+            width: 100%; aspect-ratio: 1/1;
+            max-height: 240px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #f0f2f5;
+        }
+
+        .lyrics-panel {
+            flex: 1;
+            height: 260px;
+            overflow-y: auto;
+            background: #fafbfc;
+            border-radius: 10px;
+            padding: 0 12px;
+            scroll-behavior: smooth;
+        }
+        .lyrics-panel::-webkit-scrollbar { width: 6px; }
+        .lyrics-panel::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 3px; }
+        .lyrics-panel p {
+            text-align: center;
+            color: #98a6b8;
+            font-size: 14px;
+            line-height: 2;
+            transition: color 0.2s, font-size 0.2s;
+            padding: 2px 0;
+        }
+        .lyrics-panel p.active {
+            color: #4a90d9;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .lyrics-panel .no-lyric {
+            color: #b8c2ce; font-size: 13px; text-align: center; padding: 20px;
+        }
+
+        .embed-wrap { width: 100%; }
+        .embed-wrap iframe { display: block; border-radius: 6px; }
+
         @media (max-width: 860px) {
             .sidebar { transform: translateX(-100%); transition: transform 0.22s; }
             .sidebar.mobile-open { transform: translateX(0); }
-            .main-content { margin-left: 0; padding: 70px 16px 140px; }
+            .main-content { margin-left: 0; padding: 70px 16px 220px; }
             .mobile-toggle {
                 display: flex !important;
                 position: fixed; top: 14px; left: 14px; z-index: 200;
@@ -247,8 +247,10 @@
                 cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
             }
             .song-duration { display: none; }
-            .player-bar { left: 0; flex-direction: column; align-items: stretch; }
-            .player-frame iframe { width: 100%; }
+            .player-bar { left: 0; }
+            .player-body { flex-direction: column; }
+            .audio-wrap { flex: 1 1 auto; }
+            .lyrics-panel { height: 180px; width: 100%; }
         }
         .mobile-toggle { display: none; }
     </style>
@@ -257,7 +259,6 @@
 
 <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('mobile-open')">☰</button>
 
-<!-- 侧边栏 -->
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <span class="brand-logo">📂</span>
@@ -298,7 +299,6 @@
     </div>
 </aside>
 
-<!-- 主内容 -->
 <main class="main-content">
     <div class="content-inner">
 
@@ -311,7 +311,6 @@
             <button type="submit">搜索</button>
         </form>
 
-        <!-- 音乐源切换 -->
         <div class="source-bar">
             <span class="source-label">音乐源：</span>
             <a href="?q={{ keyword|urlencode }}&source=auto&mode={{ mode }}"
@@ -327,7 +326,6 @@
             {% endfor %}
         </div>
 
-        <!-- 播放方式切换 -->
         <div class="source-bar">
             <span class="source-label">播放方式：</span>
             <a href="?q={{ keyword|urlencode }}&source={{ source }}&mode=jump"
@@ -336,16 +334,16 @@
             </a>
             <a href="?q={{ keyword|urlencode }}&source={{ source }}&mode=embed"
                class="source-chip mode-chip {% if mode == 'embed' %}active{% endif %}">
-                外链播放 <span class="tag">页内</span>
+                外链播放 <span class="tag">iframe</span>
+            </a>
+            <a href="?q={{ keyword|urlencode }}&source={{ source }}&mode=audio"
+               class="source-chip mode-chip {% if mode == 'audio' %}active{% endif %}">
+                页内播放 <span class="tag">歌词同步</span>
             </a>
         </div>
 
-        <!-- 结果 -->
         {% if error %}
-            <div class="hint error">
-                <span class="big">⚠️</span>
-                {{ error }}
-            </div>
+            <div class="hint error"><span class="big">⚠️</span>{{ error }}</div>
         {% elif results %}
             <div class="result-list">
                 {% for song in results %}
@@ -366,11 +364,19 @@
                     <div class="song-duration">{{ song.duration_text }}</div>
                     {% endif %}
 
-                    {% if mode == 'embed' %}
+                    {% if mode == 'audio' %}
+                    <button type="button" class="btn-play"
+                            data-id="{{ song.id }}"
+                            data-title="{{ song.name }} — {{ song.artist }}"
+                            data-cover="{{ song.cover }}"
+                            onclick="playAudio(this)">
+                        ▶ 播放
+                    </button>
+                    {% elif mode == 'embed' %}
                     <button type="button" class="btn-play"
                             data-src="{{ song.player_src }}"
                             data-title="{{ song.name }} — {{ song.artist }}"
-                            onclick="playSong(this)">
+                            onclick="playEmbed(this)">
                         ▶ 播放
                     </button>
                     {% else %}
@@ -382,46 +388,247 @@
                 {% endfor %}
             </div>
         {% elif keyword %}
-            <div class="hint">
-                <span class="big">🔍</span>
-                没有找到「{{ keyword }}」相关的歌曲
-            </div>
+            <div class="hint"><span class="big">🔍</span>没有找到「{{ keyword }}」相关的歌曲</div>
         {% else %}
-            <div class="hint">
-                <span class="big">🎧</span>
-                输入关键词，搜索网易云音乐
-            </div>
+            <div class="hint"><span class="big">🎧</span>输入关键词，搜索网易云音乐</div>
         {% endif %}
 
     </div>
 </main>
 
-<!-- 底部播放条 -->
 <div class="player-bar" id="playerBar">
-    <div class="player-info">
+    <div class="player-header">
         <span class="player-title" id="playerTitle">—</span>
         <button class="player-close" onclick="closePlayer()" title="关闭">✕</button>
     </div>
-    <div class="player-frame" id="playerFrame"></div>
+    <div class="player-body" id="playerBody">
+        <div class="audio-wrap" id="audioWrap" style="display:none;">
+            <img class="audio-cover" id="audioCover" alt="" style="display:none;">
+            <audio id="audioPlayer" controls preload="metadata"></audio>
+        </div>
+        <div class="lyrics-panel" id="lyricsPanel" style="display:none;">
+            <div id="lyricsContainer">
+                <p class="no-lyric">—</p>
+            </div>
+        </div>
+
+        <div class="embed-wrap" id="embedWrap" style="display:none;"></div>
+    </div>
 </div>
 
 <script>
-    function playSong(btn) {
-        const src = btn.dataset.src;
-        const title = btn.dataset.title;
-        const bar = document.getElementById('playerBar');
-        const frame = document.getElementById('playerFrame');
-        const titleEl = document.getElementById('playerTitle');
+    const audioEl = document.getElementById('audioPlayer');
+    const lyricsContainer = document.getElementById('lyricsContainer');
+    const lyricsPanel = document.getElementById('lyricsPanel');
+    const audioWrap = document.getElementById('audioWrap');
+    const audioCover = document.getElementById('audioCover');
+    const embedWrap = document.getElementById('embedWrap');
+    const playerBar = document.getElementById('playerBar');
+    const playerTitle = document.getElementById('playerTitle');
 
-        frame.innerHTML = '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="' + src + '"></iframe>';
-        titleEl.textContent = title;
-        bar.classList.add('show');
-    }
+    let lrcLines = [];
+    let currentSongId = null;
+    let lastActive = -1;
+    let panelReady = false;
 
     function closePlayer() {
-        document.getElementById('playerBar').classList.remove('show');
-        document.getElementById('playerFrame').innerHTML = '';
+        audioEl.pause();
+        audioEl.removeAttribute('src');
+        audioEl.load();
+        embedWrap.innerHTML = '';
+        playerBar.classList.remove('show');
+        lrcLines = [];
+        currentSongId = null;
+        lastActive = -1;
+        panelReady = false;
     }
+
+    function playEmbed(btn) {
+        const src = btn.dataset.src;
+        const title = btn.dataset.title;
+
+        audioEl.pause();
+        audioWrap.style.display = 'none';
+        lyricsPanel.style.display = 'none';
+
+        embedWrap.style.display = 'block';
+        embedWrap.innerHTML =
+            '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" ' +
+            'width="330" height="86" src="' + src + '"></iframe>';
+
+        playerTitle.textContent = title;
+        playerBar.classList.add('show');
+    }
+
+    async function playAudio(btn) {
+        const songId = btn.dataset.id;
+        const title = btn.dataset.title;
+        const cover = btn.dataset.cover;
+
+        currentSongId = songId;
+        playerTitle.textContent = title;
+        playerBar.classList.add('show');
+
+        embedWrap.style.display = 'none';
+        embedWrap.innerHTML = '';
+        audioWrap.style.display = 'flex';
+        lyricsPanel.style.display = 'block';
+
+        if (cover) {
+            audioCover.src = cover + '?param=300y300';
+            audioCover.style.display = 'block';
+        } else {
+            audioCover.style.display = 'none';
+        }
+
+        lyricsContainer.innerHTML = '<p class="no-lyric">加载中…</p>';
+        lrcLines = [];
+        lastActive = -1;
+        panelReady = false;
+
+        let url = null;
+        try {
+            const r = await fetch(`/api/song-url/${songId}/`);
+            const data = await r.json();
+            url = data.url;
+        } catch (e) { console.error(e); }
+
+        if (!url) {
+            lyricsContainer.innerHTML =
+                '<p class="no-lyric">无法获取播放链接<br>（可能是 VIP / 版权受限 / 防盗链）<br>请切换到「外链播放」模式</p>';
+            audioEl.removeAttribute('src');
+            audioEl.load();
+            return;
+        }
+
+        audioEl.src = url;
+        try { await audioEl.play(); } catch (e) { console.warn(e); }
+
+        loadLyric(songId);
+    }
+
+    function parseLrc(text) {
+        if (!text) return [];
+        const out = [];
+        const re = /\[(\d{1,2}):(\d{1,2})(?:[.:](\d{1,3}))?\]/g;
+        for (const raw of text.split('\n')) {
+            let match; const times = [];
+            re.lastIndex = 0;
+            while ((match = re.exec(raw)) !== null) {
+                const m = parseInt(match[1], 10);
+                const s = parseInt(match[2], 10);
+                let ms = 0;
+                if (match[3]) {
+                    const f = match[3];
+                    ms = f.length === 3 ? parseInt(f, 10)
+                        : f.length === 2 ? parseInt(f, 10) * 10
+                        : parseInt(f, 10) * 100;
+                }
+                times.push(m * 60 + s + ms / 1000);
+            }
+            const content = raw.replace(re, '').trim();
+            if (content && times.length) for (const t of times) out.push({ time: t, text: content });
+        }
+        return out.sort((a, b) => a.time - b.time);
+    }
+
+    function escapeHtml(s) {
+        return s.replace(/[&<>"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;',
+            '"': '&quot;', "'": '&#39;'
+        })[c]);
+    }
+
+    function applyPadding() {
+        const ps = lyricsContainer.querySelectorAll('p');
+        if (!ps.length) return;
+        const lineH = ps[0].offsetHeight || 33;
+        const h = lyricsPanel.clientHeight;
+        if (h <= 0) return;
+        const pad = Math.max(0, Math.floor(h / 2 - lineH / 2));
+        lyricsPanel.style.paddingTop = pad + 'px';
+        lyricsPanel.style.paddingBottom = pad + 'px';
+    }
+
+    function scrollLineToCenter(index, smooth) {
+        const ps = lyricsContainer.querySelectorAll('p');
+        if (index < 0 || !ps[index]) return;
+
+        const panelRect = lyricsPanel.getBoundingClientRect();
+        const lineRect = ps[index].getBoundingClientRect();
+        if (panelRect.height === 0) return;
+
+        const lineCenterInPanel = (lineRect.top - panelRect.top) + lineRect.height / 2;
+        const panelCenter = panelRect.height / 2;
+        const delta = lineCenterInPanel - panelCenter;
+        const target = lyricsPanel.scrollTop + delta;
+
+        if (smooth) {
+            lyricsPanel.scrollTo({ top: target, behavior: 'smooth' });
+        } else {
+            const old = lyricsPanel.style.scrollBehavior;
+            lyricsPanel.style.scrollBehavior = 'auto';
+            lyricsPanel.scrollTop = target;
+            lyricsPanel.style.scrollBehavior = old || '';
+        }
+    }
+
+    async function loadLyric(songId) {
+        try {
+            const r = await fetch(`/api/lyric/${songId}/`);
+            const data = await r.json();
+            if (currentSongId !== songId) return;
+
+            if (data.error || !data.lyric) {
+                lyricsContainer.innerHTML = '<p class="no-lyric">暂无歌词</p>';
+                return;
+            }
+            lrcLines = parseLrc(data.lyric);
+            if (!lrcLines.length) {
+                lyricsContainer.innerHTML = '<p class="no-lyric">暂无歌词</p>';
+                return;
+            }
+            lyricsContainer.innerHTML = lrcLines.map((l, i) =>
+                `<p data-index="${i}">${escapeHtml(l.text)}</p>`
+            ).join('');
+
+            // 双 rAF：等布局完成再算 padding 和居中
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    applyPadding();
+                    panelReady = true;
+                    scrollLineToCenter(0, false);
+                });
+            });
+        } catch (e) {
+            lyricsContainer.innerHTML = '<p class="no-lyric">歌词加载失败</p>';
+        }
+    }
+
+    function syncLyrics(t) {
+        if (!lrcLines.length || !panelReady) return;
+        let idx = -1;
+        for (let i = 0; i < lrcLines.length; i++) {
+            if (t >= lrcLines[i].time) idx = i; else break;
+        }
+        if (idx === lastActive) return;
+        lastActive = idx;
+
+        const ps = lyricsContainer.querySelectorAll('p');
+        ps.forEach((p, i) => p.classList.toggle('active', i === idx));
+        if (idx >= 0) scrollLineToCenter(idx, true);
+    }
+
+    window.addEventListener('resize', () => {
+        applyPadding();
+        if (lastActive >= 0) scrollLineToCenter(lastActive, false);
+    });
+
+    audioEl.ontimeupdate = () => syncLyrics(audioEl.currentTime);
+    audioEl.onended = () => {
+        lastActive = -1;
+        lyricsContainer.querySelectorAll('p').forEach(p => p.classList.remove('active'));
+    };
 </script>
 
 </body>

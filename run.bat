@@ -36,7 +36,7 @@ goto menu
 :start_music
 echo.
 echo 正在启动 网易云音乐API (端口 8001)...
-start "网易云音乐API" cmd /k "cd /d D:\python_file\新建文件夹\Python_NetEaseMusicAPI && call D:\python_file\新建文件夹\Python_NetEaseMusicAPI\.venv\Scripts\activate.bat && python manage.py runserver 0.0.0.0:8001"
+start "网易云音乐API" cmd /k "cd /d D:\python\django\163api && call D:\python\django\my_media_site\.venv\Scripts\activate.bat && python manage.py runserver 0.0.0.0:8001"
 echo 服务已启动！
 pause
 goto menu

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
+from django.http import JsonResponse
 from .models import Collection, Video, Audio
 from .services.netease import NetEaseMusicService, NetEaseAPIError
 
@@ -52,7 +53,7 @@ def media_list(request):
 def online_search(request):
     keyword = request.GET.get('q', '').strip()
     source = request.GET.get('source') or settings.DEFAULT_MUSIC_SOURCE
-    mode = request.GET.get('mode') or 'jump'   # jump=跳转 | embed=外链播放
+    mode = request.GET.get('mode') or 'jump'   # jump | embed | audio
 
     results = []
     error = None
@@ -74,4 +75,33 @@ def online_search(request):
         'collections': Collection.objects.all(),
         'results': results,
         'error': error,
+    })
+
+
+def api_get_song_url(request, song_id):
+    try:
+        service = NetEaseMusicService()
+        url = service.get_song_url(song_id)
+        return JsonResponse({'url': url})
+    except NetEaseAPIError as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def api_get_lyric(request, song_id):
+    try:
+        service = NetEaseMusicService()
+        lyric, tlyric = service.get_lyric(song_id)
+        return JsonResponse({'lyric': lyric, 'tlyric': tlyric})
+    except NetEaseAPIError as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+from django.shortcuts import render, get_object_or_404
+
+
+def lyric_detail(request, audio_id):
+    audio = get_object_or_404(Audio, id=audio_id)
+    collections = Collection.objects.all()
+    return render(request, 'player/lyric_detail.html', {
+        'audio': audio,
+        'collections': collections,
     })

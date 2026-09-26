@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ audio.title }} · 歌词</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: 260px; background: #1e1e1e;
+            display: flex; flex-direction: column;
+            z-index: 100; overflow: hidden;
+        }
+        .sidebar-header {
+            display: flex; align-items: center; gap: 10px;
+            padding: 20px 18px; color: #fff;
+            font-size: 15px; font-weight: 600;
+        }
+        .brand-logo { font-size: 18px; }
+        .sidebar-body { flex: 1; overflow-y: auto; padding: 4px 8px 8px; }
+        .sidebar-body::-webkit-scrollbar { width: 6px; }
+        .sidebar-body::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 3px; }
+        .section-label {
+            font-size: 12px; color: #7a7a7a;
+            padding: 12px 10px 6px; letter-spacing: 0.5px;
+        }
+        .nav-list { display: flex; flex-direction: column; gap: 2px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 10px; border-radius: 8px;
+            color: #d4d4d4; text-decoration: none; font-size: 14px;
+            white-space: nowrap; overflow: hidden;
+            transition: background 0.15s, color 0.15s;
+        }
+        .nav-item:hover { background: #2f2f2f; color: #fff; }
+        .nav-item.active { background: #333; color: #fff; }
+        .nav-icon { flex-shrink: 0; width: 22px; text-align: center; font-size: 15px; }
+        .nav-text { overflow: hidden; text-overflow: ellipsis; flex: 1; }
+        .nav-count {
+            font-size: 12px; color: #8a8a8a;
+            background: #2a2a2a; padding: 1px 7px;
+            border-radius: 10px; flex-shrink: 0;
+        }
+        .sidebar-footer { padding: 8px; border-top: 1px solid #2a2a2a; }
+
+        .main-content {
+            margin-left: 260px;
+            padding: 36px 32px 60px;
+            min-height: 100vh;
+        }
+        .content-inner { max-width: 900px; margin: 0 auto; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #4a90d9; text-decoration: none;
+            font-size: 14px; margin-bottom: 20px;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .song-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+            border-radius: 16px;
+            padding: 28px 32px;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+        .song-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+        .song-header .artist { font-size: 15px; color: #c3d5ec; }
+        .song-header .album { font-size: 13px; color: #a8c1dd; margin-top: 4px; }
+
+        .player-card {
+            background: #fff; border-radius: 14px; padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 24px;
+        }
+        .player-card audio { width: 100%; display: block; }
+
+        .lyrics-card {
+            background: #fff; border-radius: 14px;
+            padding: 24px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+        .lyrics-card h2 {
+            font-size: 16px; font-weight: 600;
+            color: #1a1a2e; padding: 0 24px 16px;
+            border-bottom: 1px solid #f0f2f5;
+            margin-bottom: 12px;
+        }
+
+        .lyrics-panel {
+            height: 420px;
+            overflow-y: auto;
+            padding: 0 12px;
+            scroll-behavior: smooth;
+        }
+        .lyrics-panel::-webkit-scrollbar { width: 6px; }
+        .lyrics-panel::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 3px; }
+        .lyrics-panel p {
+            text-align: center;
+            color: #98a6b8;
+            font-size: 15px;
+            line-height: 2.2;
+            transition: color 0.2s, font-size 0.2s;
+            padding: 3px 0;
+        }
+        .lyrics-panel p.active {
+            color: #4a90d9;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .lyrics-panel .no-lyric {
+            color: #b8c2ce; text-align: center; padding: 40px;
+        }
+
+        @media (max-width: 860px) {
+            .sidebar { transform: translateX(-100%); transition: transform 0.22s; }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 70px 16px 40px; }
+            .mobile-toggle {
+                display: flex !important;
+                position: fixed; top: 14px; left: 14px; z-index: 200;
+                background: #1e1e1e; border: none; color: #fff;
+                width: 40px; height: 40px; border-radius: 8px;
+                align-items: center; justify-content: center;
+                cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            }
+        }
+        .mobile-toggle { display: none; }
+    </style>
+</head>
+<body>
+
+<button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('mobile-open')">☰</button>
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <span class="brand-logo">📂</span>
+        <span>媒体中心</span>
+    </div>
+    <div class="sidebar-body">
+        <div class="section-label">导航</div>
+        <nav class="nav-list">
+            <a href="{% url 'home' %}" class="nav-item">
+                <span class="nav-icon">🏠</span><span class="nav-text">首页</span>
+            </a>
+            <a href="{% url 'media_list' %}" class="nav-item active">
+                <span class="nav-icon">🎬</span><span class="nav-text">本地媒体库</span>
+            </a>
+            <a href="{% url 'online_search' %}" class="nav-item">
+                <span class="nav-icon">🎵</span><span class="nav-text">在线音乐</span>
+            </a>
+        </nav>
+        <div class="section-label">合集</div>
+        <nav class="nav-list">
+            {% for collection in collections %}
+            <a href="{% url 'media_list' %}#collection-{{ collection.id }}" class="nav-item" title="{{ collection.name }}">
+                <span class="nav-icon">📁</span>
+                <span class="nav-text">{{ collection.name }}</span>
+                <span class="nav-count">{{ collection.videos.count|add:collection.audios.count }}</span>
+            </a>
+            {% empty %}
+            <div class="nav-item" style="color:#6a6a6a;font-size:13px;cursor:default;">
+                <span class="nav-icon">—</span><span class="nav-text">暂无合集</span>
+            </div>
+            {% endfor %}
+        </nav>
+    </div>
+    <div class="sidebar-footer">
+        <a href="/admin/" target="_blank" class="nav-item">
+            <span class="nav-icon">⚙️</span><span class="nav-text">管理后台</span>
+        </a>
+    </div>
+</aside>
+
+<main class="main-content">
+    <div class="content-inner">
+
+        <a href="{% url 'media_list' %}" class="back-link">← 返回媒体库</a>
+
+        <div class="song-header">
+            <h1>{{ audio.title }}</h1>
+            {% if audio.artist %}<div class="artist">{{ audio.artist }}</div>{% endif %}
+            {% if audio.collection %}<div class="album">所属合集：{{ audio.collection.name }}</div>{% endif %}
+        </div>
+
+        <div class="player-card">
+            <audio id="audioPlayer" controls preload="metadata" src="{{ audio.file.url }}"></audio>
+        </div>
+
+        <div class="lyrics-card">
+            <h2>📝 歌词</h2>
+            <div class="lyrics-panel" id="lyricsPanel">
+                <div id="lyricsContainer">
+                    <p class="no-lyric">暂无歌词</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+{{ audio.lyric|json_script:"lyric-data" }}
+
+<script>
+    const audioEl = document.getElementById('audioPlayer');
+    const lyricsContainer = document.getElementById('lyricsContainer');
+    const lyricsPanel = document.getElementById('lyricsPanel');
+    const rawLyric = JSON.parse(document.getElementById('lyric-data').textContent);
+
+    let lrcLines = [];
+    let lastActive = -1;
+    let panelReady = false;
+
+    function parseLrc(text) {
+        if (!text) return [];
+        const out = [];
+        const re = /\[(\d{1,2}):(\d{1,2})(?:[.:](\d{1,3}))?\]/g;
+        for (const raw of text.split('\n')) {
+            let match; const times = [];
+            re.lastIndex = 0;
+            while ((match = re.exec(raw)) !== null) {
+                const m = parseInt(match[1], 10);
+                const s = parseInt(match[2], 10);
+                let ms = 0;
+                if (match[3]) {
+                    const f = match[3];
+                    ms = f.length === 3 ? parseInt(f, 10)
+                        : f.length === 2 ? parseInt(f, 10) * 10
+                        : parseInt(f, 10) * 100;
+                }
+                times.push(m * 60 + s + ms / 1000);
+            }
+            const content = raw.replace(re, '').trim();
+            if (content && times.length) for (const t of times) out.push({ time: t, text: content });
+        }
+        return out.sort((a, b) => a.time - b.time);
+    }
+
+    function escapeHtml(s) {
+        return s.replace(/[&<>"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;',
+            '"': '&quot;', "'": '&#39;'
+        })[c]);
+    }
+
+    /* 按面板高度设置上下 padding，让首句和末句都能居中 */
+    function applyPadding() {
+        const ps = lyricsContainer.querySelectorAll('p');
+        if (!ps.length) return;
+        const lineH = ps[0].offsetHeight || 33;
+        const h = lyricsPanel.clientHeight;
+        if (h <= 0) return;   // 面板还没显示，跳过
+        const pad = Math.max(0, Math.floor(h / 2 - lineH / 2));
+        lyricsPanel.style.paddingTop = pad + 'px';
+        lyricsPanel.style.paddingBottom = pad + 'px';
+    }
+
+    /* 用 getBoundingClientRect 算相对位置，不依赖 offsetParent */
+    function scrollLineToCenter(index, smooth) {
+        const ps = lyricsContainer.querySelectorAll('p');
+        if (index < 0 || !ps[index]) return;
+
+        const panelRect = lyricsPanel.getBoundingClientRect();
+        const lineRect = ps[index].getBoundingClientRect();
+        if (panelRect.height === 0) return;
+
+        // 当前行中心，相对面板顶部的偏移
+        const lineCenterInPanel = (lineRect.top - panelRect.top) + lineRect.height / 2;
+        const panelCenter = panelRect.height / 2;
+        const delta = lineCenterInPanel - panelCenter;
+        const target = lyricsPanel.scrollTop + delta;
+
+        if (smooth) {
+            lyricsPanel.scrollTo({ top: target, behavior: 'smooth' });
+        } else {
+            // 初始化时临时关掉 smooth，让位置立即到位
+            const old = lyricsPanel.style.scrollBehavior;
+            lyricsPanel.style.scrollBehavior = 'auto';
+            lyricsPanel.scrollTop = target;
+            lyricsPanel.style.scrollBehavior = old || '';
+        }
+    }
+
+    function syncLyrics(t) {
+        if (!lrcLines.length || !panelReady) return;
+        let idx = -1;
+        for (let i = 0; i < lrcLines.length; i++) {
+            if (t >= lrcLines[i].time) idx = i; else break;
+        }
+        if (idx === lastActive) return;
+        lastActive = idx;
+        const ps = lyricsContainer.querySelectorAll('p');
+        ps.forEach((p, i) => p.classList.toggle('active', i === idx));
+        if (idx >= 0) scrollLineToCenter(idx, true);
+    }
+
+    // 初始化
+    lrcLines = parseLrc(rawLyric);
+    if (lrcLines.length) {
+        lyricsContainer.innerHTML = lrcLines.map((l, i) =>
+            `<p data-index="${i}">${escapeHtml(l.text)}</p>`
+        ).join('');
+
+        // 双 rAF：等一帧布局完成，再算 padding 和滚动
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                applyPadding();
+                panelReady = true;
+                scrollLineToCenter(0, false);
+            });
+        });
+    }
+
+    window.addEventListener('resize', () => {
+        applyPadding();
+        if (lastActive >= 0) scrollLineToCenter(lastActive, false);
+    });
+
+    audioEl.ontimeupdate = () => syncLyrics(audioEl.currentTime);
+    audioEl.onended = () => {
+        lastActive = -1;
+        lyricsContainer.querySelectorAll('p').forEach(p => p.classList.remove('active'));
+    };
+</script>
+
+</body>
+</html>
