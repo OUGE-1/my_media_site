@@ -125,3 +125,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 媒体文件配置
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# 网易云 API 源（按顺序尝试）
+NETEASE_API_SOURCES = {
+    'standard_1': {
+        'name': '标准版 · MCSeekeri',
+        'url': 'https://music.mcseekeri.com',
+        'type': 'standard',
+    },
+    'standard_2': {
+        'name': '标准版 · 墨染云',
+        'url': 'https://zm.wwoyun.cn',
+        'type': 'standard',
+    },
+    'enhanced': {
+        'name': '增强版 · Sophia',
+        'url': 'https://ncm.landdy.cn',
+        'type': 'enhanced',
+    },
+}
+
+# 默认源；设为 'auto' 则按顺序自动尝试
+DEFAULT_MUSIC_SOURCE = 'auto'
